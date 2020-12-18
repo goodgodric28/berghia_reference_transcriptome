@@ -42,14 +42,14 @@ TransDecoder.Predict -t Berghia_alltissues_onerep_trinity291.fasta
 
 ## Trascript Clustering
 
-Performed with CD-HIT :
+Performed with CD-HIT (version 4.8.1):
 ```
 cd-hit-est -i Berghia_alltissues_onerep_trinity291.fasta.transdecoder.cds -o Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95.fasta -c 0.95 -n 11 -M 96000 -T 24
 ```
 
 ## Contamination Filtering
 
-Blast against AI and Symbiont database:
+Blast against AI and Symbiont database with [alien_index](https://github.com/josephryan/alien_index):
 ```
 blastx -query Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95.fasta -db ai_w_symbionts.fa -outfmt 6 -max_target_seqs 1000 -seg yes -evalue 0.001 -out Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_aiplussymbionts.blastx -num_threads 10
 ```
@@ -80,7 +80,7 @@ protein_full_transcripts.py Berghia_alltissues_onerep_trinity291.fasta  Berghia_
 
 ## BUSCO
 
-Performed with BUSCO :
+Performed with BUSCO v.4:
 ```
 busco -m transcriptome -i Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta -l mollusca_odb10 -o Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts_mollusca.v4.0.5 -f -c 8
 
@@ -96,7 +96,7 @@ calculate_basic_denovo_transcriptome_assembly_statistics.pl Berghia_alltissues_o
 
 ## Read mapping
 
-Performed with Bowtie2 :
+Performed with Bowtie2 (version 2.3.4.3):
 ```
 bowtie2-build Berghia_alltisses_onerep_trinity291.fasta.transdecoder_cdhit95_noaliens.fasta Berghia_alltisses_onerep_trinity291.fasta.transdecoder_cdhit95_noaliens
 
