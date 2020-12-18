@@ -9,7 +9,7 @@ cat Mix_S51_L003_R1_001_paired.fastq.gz Juvenile_S50_L003_R1_001_paired.fastq.gz
 cat Mix_S51_L003_R2_001_paired.fastq.gz	Juvenile_S50_L003_R2_001_paired.fastq.gz Bb904dil_S17_R2_merged.fastq.gz OT1_CRRA200005335-1a_HV572DSXX_L1_2.fq.gz R4_CRRA200005366-1a_HV572DSXX_L1_2.fq.gz P1_CRRA200005351-1a_HV572DSXX_L1_2.fq.gz D1_CRRA200005347-1a_HV572DSXX_L1_2.fq.gz F4_CRRA200005358-1a_HV572DSXX_L1_2.fq.gz TL3_CRRA200005361-1a_HV572DSXX_L1_2.fq.gz > Berghia_alltissues_onerep_R2.fq
 ```
 
-Performed with FASTP version 0.20.0:
+Performed with [FASTP](https://github.com/OpenGene/fastp) version 0.20.0:
 ```
 fastp --in1 Berghia_alltissues_onerep_R1.fq --out1 Berghia_alltissues_onerep_R1_trimmed.fq --in2 Berghia_alltissues_onerep_R2.fq --out2 Berghia_alltissues_onerep_R2_trimmed.fq
 ```
@@ -18,7 +18,7 @@ fastp --in1 Berghia_alltissues_onerep_R1.fq --out1 Berghia_alltissues_onerep_R1_
 
 ## Normalization
 
-Performed read normalization in advance of assembly due to computational constraints (with Trinity 2.9.1):
+Performed read normalization in advance of assembly due to computational constraints (with [Trinity](https://github.com/trinityrnaseq/trinityrnaseq/wiki) 2.9.1):
 ```
 insilico_read_normalization.pl --seqType fq --JM 500G --left Berghia_alltissues_onerep_R1_trimmed.fq.gz --right Berghia_alltissues_onerep_R2_trimmed.fq.gz --max_cov 100 --CPU 32 --PARALLEL_STATS --pairs_together
 ```
@@ -34,7 +34,7 @@ Trinity --seqType fq --max_memory 200G --left Berghia_alltissues_onerep_R1_trimm
 
 ## ORF Detection
 
-Performed with Transdecoder version 5.5.0:
+Performed with [Transdecoder](https://github.com/TransDecoder/TransDecoder/wiki) version 5.5.0:
 ```
 TransDecoder.LongOrfs -t Berghia_alltissues_onerep_trinity291.fasta
 TransDecoder.Predict -t Berghia_alltissues_onerep_trinity291.fasta
@@ -42,7 +42,7 @@ TransDecoder.Predict -t Berghia_alltissues_onerep_trinity291.fasta
 
 ## Trascript Clustering
 
-Performed with CD-HIT (version 4.8.1):
+Performed with [CD-HIT](http://weizhongli-lab.org/cd-hit/) (version 4.8.1):
 ```
 cd-hit-est -i Berghia_alltissues_onerep_trinity291.fasta.transdecoder.cds -o Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95.fasta -c 0.95 -n 11 -M 96000 -T 24
 ```
@@ -80,7 +80,7 @@ protein_full_transcripts.py Berghia_alltissues_onerep_trinity291.fasta  Berghia_
 
 ## BUSCO
 
-Performed with BUSCO v.4:
+Performed with [BUSCO](https://busco.ezlab.org/) v.4:
 ```
 busco -m transcriptome -i Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta -l mollusca_odb10 -o Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts_mollusca.v4.0.5 -f -c 8
 
@@ -89,14 +89,14 @@ busco -m transcriptome -i Berghia_alltissues_onerep_trinity291_transdecoder_cdhi
 
 ## Completeness Statistics
 
-Performed with script from Goodheart & Waegele 2020 (https://github.com/goodgodric28/phylliroe_phylogenomics), calculate_basic_denovo_transcriptome_assembly_statistics.pl:
+Performed with script from Goodheart & Waegele 2020 ([repository](https://github.com/goodgodric28/phylliroe_phylogenomics)), calculate_basic_denovo_transcriptome_assembly_statistics.pl:
 ```
 calculate_basic_denovo_transcriptome_assembly_statistics.pl Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta
 ```
 
 ## Read mapping
 
-Performed with Bowtie2 (version 2.3.4.3):
+Performed with [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) (version 2.3.4.3):
 ```
 bowtie2-build Berghia_alltisses_onerep_trinity291.fasta.transdecoder_cdhit95_noaliens.fasta Berghia_alltisses_onerep_trinity291.fasta.transdecoder_cdhit95_noaliens
 
@@ -110,7 +110,7 @@ First generated gene_to_trans_map with modified get_Trinity_gene_to_trans_map.pl
 get_Trinity_gene_to_trans_map.pl Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta > Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta.gene_trans_map
 ```
 
-Used the Trinotate Annotation pipeline (BLAST+ 2.2.31, SignalP version 5.0b, tmhmm-2.0c, rnammer 1.2, TransDecoder v.5.5.0, HMMER 3.1b2), instructions found [here](https://github.com/Trinotate/Trinotate.github.io/wiki/Software-installation-and-data-required):
+Used the [Trinotate Annotation pipeline](https://github.com/Trinotate/Trinotate.github.io/wiki/Software-installation-and-data-required) (BLAST+ 2.2.31, SignalP version 5.0b, tmhmm-2.0c, rnammer 1.2, TransDecoder v.5.5.0, HMMER 3.1b2), instructions found [here](https://github.com/Trinotate/Trinotate.github.io/wiki/Software-installation-and-data-required):
 ```
 TransDecoder.LongOrfs -t Berghia_alltisses_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta
 TransDecoder.Predict -t Berghia_alltisses_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta
