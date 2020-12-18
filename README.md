@@ -94,7 +94,7 @@ Performed with script from Goodheart & Waegele 2020 (https://github.com/goodgodr
 calculate_basic_denovo_transcriptome_assembly_statistics.pl Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta
 ```
 
-# Read mapping
+## Read mapping
 
 Performed with Bowtie2 :
 ```
