@@ -128,7 +128,7 @@ tmhmm --short < Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noalie
 Trinotate-Trinotate-v3.2.1/util/rnammer_support/RnammerTranscriptome.pl --transcriptome Berghia_alltisses_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta --path_to_rnammer rnammer
 ```
 
-Then loaded the results files into the appropriate SQLite DB using [Trinotate](https://github.com/Trinotate/Trinotate.github.io/wiki/Loading-generated-results-into-a-Trinotate-SQLite-Database-and-Looking-the-Output-Annotation-Report)
+Then loaded the results files into the appropriate SQLite DB using [Trinotate](https://github.com/Trinotate/Trinotate.github.io/wiki/Loading-generated-results-into-a-Trinotate-SQLite-Database-and-Looking-the-Output-Annotation-Report).
 
 # Citations
 
