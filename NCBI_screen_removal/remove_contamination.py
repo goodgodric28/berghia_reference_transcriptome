@@ -3,7 +3,7 @@
 # This file is a python script to remove/trim vector/contamination sequences from NCBI TSA submission transcriptome assemblies
 #
 # Author: Jessica A. Goodheart, UC San Diego
-# Last updated: 22 December 2020
+# Last updated: 5 January 2021
 #
 # Usage: python3 remove_contamination.py <FILE>.fasta Contamination.txt
 
@@ -70,13 +70,12 @@ with open("filtered_sequences.fasta", "w") as out_file:
         elif seq_nums_cut.count(name) > 1:
             # Get index numbers
             indices = [i for i, x in enumerate(seq_nums_cut) if x == name]
-            #print(name + " " + str(indices))
 
             #Remove ranges
             for i in indices[::-1]:
                 start = seq_cut_start[i]-1
                 end = seq_cut_end[i]-1
-                #print(str(start) + " " + str(end))
+
                 if start == 0:
                     new_fasta = sequence[end + 1: :]
                     sequence = new_fasta
@@ -90,14 +89,17 @@ with open("filtered_sequences.fasta", "w") as out_file:
                 out_file.write(">" + name + "\n" + sequence + "\n")
         elif seq_nums_cut.count(name) == 1:
             ind = seq_nums_cut.index(name)
-            start = seq_cut_start[ind]
-            end = seq_cut_start[ind]
+            start = seq_cut_start[ind]-1
+            end = seq_cut_end[ind]-1
+
             if start == 0:
                 new_fasta = sequence[end + 1: :]
                 sequence = new_fasta
+                #print(name + "\n" + sequence + "\n" + str(start) + "\n" + str(end))
             else:
                 new_fasta = sequence[0 : start : ] + sequence[end + 1 : :]
                 sequence = new_fasta
+                #print(name + "\n" + sequence + "\n" + str(start) + "\n" + str(end))
 
             if len(sequence) < 200:
                 print(name + " too short post-trimming.")
