@@ -40,7 +40,7 @@ TransDecoder.LongOrfs -t Berghia_alltissues_onerep_trinity291.fasta
 TransDecoder.Predict -t Berghia_alltissues_onerep_trinity291.fasta
 ```
 
-## Trascript Clustering
+## Transcript Clustering
 
 Performed with [CD-HIT](http://weizhongli-lab.org/cd-hit/) (version 4.8.1):
 ```
