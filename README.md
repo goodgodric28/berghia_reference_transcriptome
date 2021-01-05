@@ -69,11 +69,27 @@ Remove aliens with alien_index:
 remove_aliens Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_aiplussymbionts_subset.alien_index Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95.fasta > Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens.fasta
 ```
 
-# Final Transcriptome
+# Full Transcripts
 
 Transcripts of final sequences pulled from original transcriptome with custom script protein_full_transripts.py (creates output file - full_transcripts_subset.fasta):
 ```
 protein_full_transcripts.py Berghia_alltissues_onerep_trinity291.fasta  Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens.fasta
+```
+
+# NCBI Filtering
+
+The output transcriptome above was submitted to NCBI, and these steps were performed after. 
+
+Adapter trimming via trim_adapters.pl downloaded from the [Trinity Community Codebase](https://github.com/trinityrnaseq/trinity_community_codebase):
+```
+blastn -task blastn -reward 1 -penalty -5 -gapopen 3 -gapextend 3 -dust yes -soft_masking true -evalue 700 -searchsp 1750000000000 -outfmt 6 -db UniVec_Core -query Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta -num_threads 2 -out Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta.fmt6.out
+
+trim_adapters.pl -infile Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta outfile Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts_novectors.fasta -scanfile Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts.fasta.fmt6.out -adapters "NGB00593:30 NGB00149:45 NGB00871:32 NGB00847:64 NGB00853:64 NGB00568:30 NGB00855:64 NGB00858:64 NGB00568:30 NGB00596:52 NGB00864:66 NGB00761:65" -minlen 200 -relaxed 
+```
+
+Contamination removal was completed using a custom script (remove_contamination.py) found in the NCBI_screen_removal directory (creates filtered_sequences.fasta):
+```
+remove_contamination.py Berghia_alltissues_onerep_trinity291_transdecoder_cdhit95_noaliens_fulltranscripts_novectors.fasta Contamination.txt
 ```
 
 # Transcriptome Quality Assessments
